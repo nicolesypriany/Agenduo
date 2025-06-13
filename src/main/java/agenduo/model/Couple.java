@@ -1,0 +1,26 @@
+package agenduo.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Table(name = "couples")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Couple {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_a_id")
+    private User userA;
+
+    @ManyToOne
+    @JoinColumn(name = "user_b_id")
+    private User userB;
+}
