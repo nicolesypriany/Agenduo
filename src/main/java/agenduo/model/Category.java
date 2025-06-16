@@ -11,4 +11,8 @@ public class Category {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
 }

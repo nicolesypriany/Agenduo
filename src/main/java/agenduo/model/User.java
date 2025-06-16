@@ -1,5 +1,6 @@
 package agenduo.model;
 
+import agenduo.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,14 @@ public class User {
     @JoinColumn(name = "couple_id")
     private Couple couple;
 
+    private Boolean isActive;
+
+    public User(UserDTO request) {
+        this.name = request.name();
+        this.isActive = true;
+    }
+
+    public void delete() {
+        this.isActive = false;
+    }
 }

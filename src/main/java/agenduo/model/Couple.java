@@ -23,4 +23,16 @@ public class Couple {
     @ManyToOne
     @JoinColumn(name = "user_b_id")
     private User userB;
+
+    private Boolean isActive;
+
+    public Couple(User userA, User userB) {
+        this.userA = userA;
+        this.userB = userB;
+        this.isActive = true;
+    }
+
+    public void delete() {
+        this.isActive = false;
+    }
 }

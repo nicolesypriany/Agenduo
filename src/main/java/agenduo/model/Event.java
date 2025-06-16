@@ -2,7 +2,9 @@ package agenduo.model;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Table(name = "base_events")
 @Entity
@@ -14,6 +16,9 @@ public abstract class Event {
     private String title;
     private String description;
     private LocalDate date;
+    private String place;
+    private LocalTime startTime;
+    private Duration duration;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -21,4 +26,6 @@ public abstract class Event {
 
     @ManyToOne
     private Recurrence recurrence;
+
+    private Boolean isActive;
 }

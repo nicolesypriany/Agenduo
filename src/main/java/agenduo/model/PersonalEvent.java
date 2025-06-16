@@ -9,5 +9,5 @@ public class PersonalEvent extends Event {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User user;
+    private User owner;
 }
