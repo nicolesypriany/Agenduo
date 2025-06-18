@@ -1,6 +1,6 @@
 package agenduo.model;
 
-import agenduo.dto.UserDTO;
+import agenduo.dto.request.UserRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +24,15 @@ public class User {
 
     private Boolean isActive;
 
-    public User(UserDTO request) {
+    public User(UserRequest request) {
         this.name = request.name();
         this.isActive = true;
+    }
+
+    public void update(UserRequest request) {
+        if(request.name() != null) {
+            this.name = request.name();
+        }
     }
 
     public void delete() {

@@ -1,5 +1,6 @@
 package agenduo.model;
 
+import agenduo.dto.request.CoupleRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +35,13 @@ public class Couple {
 
     public void delete() {
         this.isActive = false;
+    }
+
+    public void updateUserA(User user) {
+        this.userA = user;
+    }
+
+    public void updateUserB(User user) {
+        this.userB = user;
     }
 }
