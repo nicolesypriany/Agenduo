@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "users")
 @Getter
@@ -18,7 +19,8 @@ public class User {
     private Long id;
     private String name;
 
-    @OneToOne
+    @Setter
+    @ManyToOne
     @JoinColumn(name = "couple_id")
     private Couple couple;
 

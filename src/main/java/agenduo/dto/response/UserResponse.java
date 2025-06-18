@@ -10,7 +10,7 @@ public record UserResponse(Long id,
         this(
                 user.getId(),
                 user.getName(),
-                user.getCouple().getId()
+                user.getCouple() != null ? user.getCouple().getId() : null
         );
     }
 }

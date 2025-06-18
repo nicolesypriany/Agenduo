@@ -16,11 +16,11 @@ public class Couple {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_a_id")
     private User userA;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_b_id")
     private User userB;
 

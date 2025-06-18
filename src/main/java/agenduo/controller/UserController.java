@@ -2,18 +2,12 @@ package agenduo.controller;
 
 import agenduo.dto.request.UserRequest;
 import agenduo.dto.response.UserResponse;
-import agenduo.model.User;
-import agenduo.repository.CoupleRepository;
-import agenduo.repository.UserRepository;
+import agenduo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -21,54 +15,40 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private CoupleRepository coupleRepository;
+    private UserService service;
 
     @PostMapping
     @Transactional
     public ResponseEntity create(@RequestBody UserRequest request, UriComponentsBuilder uriBuilder) {
-        var user = new User(request);
-        userRepository.save(user);
+        var user = service.create(request);
+        var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.id()).toUri();
 
-        var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new UserResponse(user));
+        return ResponseEntity.created(uri).body(user);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getById(@PathVariable Long id) {
-        var user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-
+        var user = service.getById(id);
         return ResponseEntity.ok(new UserResponse(user));
     }
 
     @GetMapping
     public ResponseEntity getAll() {
-        var users = userRepository.findAll();
-
-        List<UserResponse> userResponseList = users.stream()
-                .map(UserResponse::new)
-                .toList();
-
-        return ResponseEntity.ok(userResponseList);
+        var users = service.getAll();
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity update(@PathVariable Long id, @RequestBody UserRequest request) {
-        var user = userRepository.getReferenceById(id);
-        user.update(request);
-        return ResponseEntity.ok(new UserResponse(user));
+        var user = service.update(id, request);
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-        var user = userRepository.getReferenceById(id);
-        user.delete();
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
