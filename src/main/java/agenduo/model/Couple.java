@@ -1,6 +1,5 @@
 package agenduo.model;
 
-import agenduo.dto.request.CoupleRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
