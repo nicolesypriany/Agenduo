@@ -1,4 +1,8 @@
 package agenduo.dto.request;
 
-public record UserRequest(String name) {
+import jakarta.validation.constraints.NotNull;
+
+public record UserRequest(
+        @NotNull(message = "O nome é obrigatório!")
+        String name) {
 }

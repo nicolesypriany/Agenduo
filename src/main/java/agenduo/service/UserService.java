@@ -35,11 +35,9 @@ public class UserService {
     public List<UserResponse> getAll() {
         var users = userRepository.findAll();
 
-        List<UserResponse> userResponseList = users.stream()
+        return users.stream()
                 .map(UserResponse::new)
                 .toList();
-
-        return userResponseList;
     }
 
     public UserResponse update(Long id, UserRequest request) {

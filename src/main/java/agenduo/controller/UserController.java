@@ -3,6 +3,7 @@ package agenduo.controller;
 import agenduo.dto.request.UserRequest;
 import agenduo.dto.response.UserResponse;
 import agenduo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody UserRequest request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity create(@RequestBody @Valid UserRequest request, UriComponentsBuilder uriBuilder) {
         var user = service.create(request);
         var uri = uriBuilder.path("/user/{id}").buildAndExpand(user.id()).toUri();
 
@@ -40,7 +41,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@PathVariable Long id, @RequestBody UserRequest request) {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody @Valid UserRequest request) {
         var user = service.update(id, request);
         return ResponseEntity.ok(user);
     }

@@ -3,6 +3,7 @@ package agenduo.controller;
 import agenduo.dto.request.CoupleRequest;
 import agenduo.dto.response.CoupleResponse;
 import agenduo.service.CoupleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ public class CoupleController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody CoupleRequest request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity create(@RequestBody @Valid CoupleRequest request, UriComponentsBuilder uriBuilder) {
         var couple = service.create(request);
 
         var uri = uriBuilder.path("/couple/{id}").buildAndExpand(couple.id()).toUri();
