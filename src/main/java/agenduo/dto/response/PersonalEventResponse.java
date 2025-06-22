@@ -1,6 +1,5 @@
 package agenduo.dto.response;
 
-import agenduo.model.Category;
 import agenduo.model.PersonalEvent;
 import agenduo.model.Recurrence;
 
@@ -15,8 +14,8 @@ public record PersonalEventResponse(
         LocalDate date,
         String place,
         LocalTime startTime,
-        Integer duration,
-        Category category,
+        Duration duration,
+        CategoryResponse category,
         Recurrence recurrence
 ) {
     public PersonalEventResponse(PersonalEvent personalEvent) {
@@ -28,7 +27,7 @@ public record PersonalEventResponse(
                 personalEvent.getPlace(),
                 personalEvent.getStartTime(),
                 personalEvent.getDuration(),
-                personalEvent.getCategory(),
+                new CategoryResponse(personalEvent.getCategory()),
                 personalEvent.getRecurrence()
         );
     }

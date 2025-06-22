@@ -1,7 +1,5 @@
 package agenduo.dto.request;
 
-import agenduo.model.Category;
-import agenduo.model.Recurrence;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.Duration;
@@ -22,9 +20,10 @@ public record PersonalEventRequest(
         LocalTime startTime,
 
         @NotNull(message = "A duração é obrigatória")
-        Integer duration,
+        Duration duration,
 
-        Category category,
-        Recurrence recurrence
+        Long categoryId,
+        Long recurrenceId,
+        Long ownerId
 ) {
 }

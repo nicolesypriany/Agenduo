@@ -1,5 +1,6 @@
 package agenduo.model;
 
+import agenduo.dto.request.PersonalEventRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public abstract class Event {
     private LocalDate date;
     private String place;
     private LocalTime startTime;
-    private Integer duration;
+    private Duration duration;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -33,4 +34,14 @@ public abstract class Event {
     private Recurrence recurrence;
 
     private Boolean isActive;
+
+    public void update(PersonalEventRequest request, Category category) {
+        if (request.title() != null) setTitle(request.title());
+        if (request.description() != null) setDescription(request.description());
+        if (request.date() != null) setDate(request.date());
+        if (request.place() != null) setPlace(request.place());
+        if (request.startTime() != null) setStartTime(request.startTime());
+        if (request.duration() != null) setDuration(request.duration());
+        if (category != null) setCategory(category);
+    }
 }
