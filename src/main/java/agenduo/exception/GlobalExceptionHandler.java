@@ -15,19 +15,22 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        var firstError = ex.getBindingResult().getFieldErrors().get(0);
-        var message = firstError.getField() + ": " + firstError.getDefaultMessage();
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        var errors = ex.getBindingResult()
+               .getFieldErrors()
+               .stream()
+               .map(error -> error.getField() + ": " + error.getDefaultMessage())
+               .toList();
 
-        var error = new ErrorResponse(
+        var errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
-                message,
+                String.join("; ", errors),
                 request.getRequestURI(),
                 LocalDateTime.now()
         );
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
     @ExceptionHandler(ResponseStatusException.class)
