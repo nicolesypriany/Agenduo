@@ -1,13 +1,18 @@
 package agenduo.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Table(name = "base_events")
 @Entity
+@Table(name = "base_events")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 public abstract class Event {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +23,7 @@ public abstract class Event {
     private LocalDate date;
     private String place;
     private LocalTime startTime;
-    private Duration duration;
+    private Integer duration;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
